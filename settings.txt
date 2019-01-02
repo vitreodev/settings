@@ -1,8 +1,55 @@
-# Vitreo Accounts
+
+
+## Start Parity Services
+
+/usr/bin/parity --config /etc/parity/config.toml --jsonrpc-port=8546 --ws-port=8547 --jsonrpc-interface 127.0.0.1 --jsonrpc-cors "*" --jsonrpc-hosts all --stratum --stratum-port=8888 --jsonrpc-server-threads 10 --jsonrpc-threads 10 --cache-size 16384
+
+## Start Ethminer
+
+ethminer -U -P http://127.0.0.1:8546 --cuda-devices 1
+
+
+## Create Crontab to Restart Miner
+
+	crontab -e
+
+	* CMD="ethminer -U http://127.0.0.1:8546 --cuda-devices 1"  ;  if ! ps aux|grep -v grep|grep "$CMD"; then $CMD  ;  fi
+
+	* * * * * CMD="ethminer -U -P http://127.0.0.1:8546 --cuda-devices 1"  ;  if ! ps aux|grep -v grep|grep "$CMD"; then $CMD  ;  fi
+	* * * * * sleep 30 && CMD="ethminer -U -P http://127.0.0.1:8546 --cuda-devices 1"  ;  if ! ps aux|grep -v grep|grep "$CMD"; then $CMD  ;  fi
+
+	sudo service cron start
+	sudo service cron stop
+
+### Check Running Process
+	
+	ps -eaf|grep ethminer
+
+
+VIT001	0x0be4a690b17e50c35f6f677054ce09dd67fac216
+VIT002	0x409234d623cf115744a965132e771fb6debe965f
+VIT003	0x1313f383f370b13a6154d9b82c1d8027f653c1ee
+VIT004	0x18ae1e6088fdedcb99928403bacda28042eab4e5
+VIT005	0xbd5f34715e0b4bfc64f71451380cece415ae468a
+
+VIT100	
+VIT100	
+VIT100	
+VIT100	
+VIT100	
+VIT100	
+VIT100	
+
+
+
+## Development Network Accounts
+
+### Vitreo Development Node Accounts
 0x6bb04daa965ca8cf272a38b1a29b3e158512d0d5
 0xe1a705d88121326a27b4793ba6d92c6516fe1a94
 0x85f808db0f276bfe55bea72f47a83567cca12505
 
-# Vitreo Enodes
+### Vitreo Development Enodes
 "enode://f135f980c0c62ec4b271f6e1839fac8684f7b1504d8241c9480bdf316e8f6fd456fe84dd5c3ecae6eb1fcc29d1789e6a313378d7b3771aa3af0e289f41dc40db@45.79.14.31:30303"
 "enode://777a43534441dd14b954b7c0547c3aee055e91805efa2e4ee21b57492e77b3c960493821352c23aea0c182735394593a2f685118000aee9d5696ea605316c996@192.168.2.208:30303"
+
